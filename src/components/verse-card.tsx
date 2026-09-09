@@ -30,9 +30,11 @@ export function VerseCard({
       className="animate-rise rounded-xl border border-rule bg-surface p-6"
       style={{ animationDelay: `${Math.min(index, 11) * 45}ms` }}
     >
+      {/* A tinted pill rather than a plain eyebrow: with 47-78 cards on a page,
+          the reference is the thing readers scan for. */}
       <p
-        className={`text-[0.7rem] font-medium text-saffron ${
-          hi ? "deva" : "uppercase tracking-[0.18em]"
+        className={`inline-flex items-center rounded-full bg-saffron/12 px-3 py-1 text-sm font-semibold text-saffron ${
+          hi ? "deva" : "uppercase tracking-[0.12em]"
         }`}
       >
         {dict.verseLabel} {reference}

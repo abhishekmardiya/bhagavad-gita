@@ -40,8 +40,8 @@ export function ChapterCard({
       </span>
 
       <p
-        className={`text-[0.7rem] font-medium text-saffron ${
-          hi ? "deva" : "uppercase tracking-[0.18em]"
+        className={`inline-flex w-fit items-center rounded-full bg-saffron/12 px-3 py-1 text-sm font-semibold text-saffron ${
+          hi ? "deva" : "uppercase tracking-[0.12em]"
         }`}
       >
         {dict.chapterLabel} {number}
@@ -79,9 +79,15 @@ export function ChapterCard({
         {summary}
       </p>
 
-      <p className="mt-5 flex items-center gap-2 border-t border-rule pt-4 text-xs text-muted">
-        <LotusIcon />
-        <span className={hi ? "deva" : ""}>
+      {/* Same tinted pill as the verse reference on the chapter page, so the
+          count reads as a stat rather than as a caption. */}
+      <p className="mt-5 border-t border-rule pt-4">
+        <span
+          className={`inline-flex items-center gap-1.5 rounded-full bg-saffron/12 px-3 py-1 text-sm font-semibold text-saffron ${
+            hi ? "deva" : ""
+          }`}
+        >
+          <LotusIcon />
           {verses} {dict.verses}
         </span>
       </p>
