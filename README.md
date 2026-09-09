@@ -146,6 +146,14 @@ This project runs Next.js 16, which has breaking changes from earlier versions. 
 
 `error.tsx` is a Client Component, so it cannot use `next/root-params`; it reads the locale from `usePathname()` instead.
 
+### Known dev-only warning
+
+Switching theme in development can surface:
+
+> Encountered a script tag while rendering React component.
+
+This is harmless and **dev-only**. `next-themes` renders its pre-paint script as a `<script>` element inside the provider, and React 19 warns whenever the client renders one. The warning lives only in React's `.development.js` builds — production is unaffected, and the toggle works correctly in both. There is no upstream fix as of `next-themes@0.4.6`; the only way to remove it is to stop using `next-themes` and emit the script from the Server Component layout instead.
+
 ## Not yet built
 
 Chapter detail and verse pages (`/[lang]/chapter/[slug]`). The data layer, dictionaries, locale plumbing, and language switch are all shaped so those drop in without refactoring.

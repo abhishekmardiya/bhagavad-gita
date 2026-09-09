@@ -14,7 +14,7 @@ export async function getChapters(): Promise<Chapter[]> {
   const key = process.env.RAPIDAPI_KEY;
   if (!key) {
     throw new Error(
-      "RAPIDAPI_KEY is not set. Copy env-sample.txt to .env and add your key."
+      "RAPIDAPI_KEY is not set. Copy env-sample.txt to .env and add your key.",
     );
   }
 
@@ -26,7 +26,7 @@ export async function getChapters(): Promise<Chapter[]> {
         "x-rapidapi-key": key,
         "x-rapidapi-host": API_HOST,
       },
-    }
+    },
   );
 
   if (!res.ok) {
