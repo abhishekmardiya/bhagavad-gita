@@ -2,3 +2,7 @@
 # Get one at https://rapidapi.com/bhagavad-gita-bhagavad-gita-default/api/bhagavad-gita3
 # Server-only. Never prefix with NEXT_PUBLIC_ — that would inline it into the browser bundle.
 RAPIDAPI_KEY=""
+
+# Canonical origin, used as `metadataBase` so og:image URLs are absolute.
+# Defaults to http://localhost:3000 when unset.
+SITE_URL="https://example.com"

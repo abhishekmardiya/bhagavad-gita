@@ -1,0 +1,7 @@
+- SEO 
+- homepage logo on navbar
+
+Preview OG:
+- http://localhost:3000/hi/chapter/chapter-1-arjuna-visada-yoga/opengraph-image
+
+- http://localhost:3000/en/opengraph-image

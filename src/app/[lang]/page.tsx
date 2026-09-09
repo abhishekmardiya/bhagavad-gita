@@ -1,5 +1,7 @@
 import { ChapterGrid } from "@/components/chapter-grid";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { SiteHero } from "@/components/site-hero";
 import { getDictionary, getLocale } from "@/lib/i18n/dictionaries";
 
 export default async function HomePage() {
@@ -9,9 +11,10 @@ export default async function HomePage() {
   return (
     <>
       <SiteHeader />
+      <SiteHero />
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-14">
-        <div className="mb-10">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-12">
+        <div className="mb-8">
           <h2 className={`text-2xl text-ink ${hi ? "deva" : "font-display"}`}>
             {dict.chaptersHeading}
           </h2>
@@ -23,11 +26,7 @@ export default async function HomePage() {
         <ChapterGrid />
       </main>
 
-      <footer className="border-t border-rule">
-        <p className="mx-auto max-w-6xl px-6 py-8 text-center text-xs text-muted">
-          {dict.siteNameDevanagari}
-        </p>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

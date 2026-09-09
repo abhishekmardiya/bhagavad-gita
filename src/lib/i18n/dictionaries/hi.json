@@ -10,6 +10,7 @@
   "english": "English",
   "hindi": "हिन्दी",
   "themeLabel": "थीम बदलें",
+  "scrollToTopLabel": "ऊपर जाएँ",
   "errorTitle": "अध्याय लोड नहीं हो सके",
   "errorBody": "भगवद् गीता एपीआई तक पहुँचने में समस्या हुई। कृपया पुनः प्रयास करें।",
   "retry": "पुनः प्रयास करें",
@@ -19,5 +20,6 @@
   "verseLabel": "श्लोक",
   "translationBy": "अनुवाद",
   "notFoundTitle": "यह पृष्ठ नहीं मिला",
-  "notFoundBody": "आप जिस अध्याय को खोज रहे हैं वह उपलब्ध नहीं है।"
+  "notFoundBody": "आप जिस अध्याय को खोज रहे हैं वह उपलब्ध नहीं है।",
+  "sourceOnGitHub": "GitHub पर स्रोत कोड"
 }

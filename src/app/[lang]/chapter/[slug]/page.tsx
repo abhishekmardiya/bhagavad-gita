@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { VerseList } from "@/components/verse-list";
 import {
@@ -42,9 +43,25 @@ export async function generateMetadata({
     hi ? chapter.chapter_summary_hindi : chapter.chapter_summary
   ).trim();
 
+  const heading = `${dict.chapterLabel} ${formatNumber(chapter.chapter_number, locale)} — ${title}`;
+  const description = summary.slice(0, 160);
+
+  // opengraph-image.tsx in this segment renders the matching card.
   return {
-    title: `${dict.chapterLabel} ${formatNumber(chapter.chapter_number, locale)} — ${title}`,
-    description: summary.slice(0, 160),
+    title: heading,
+    description,
+    openGraph: {
+      type: "article",
+      siteName: dict.siteName,
+      locale: hi ? "hi_IN" : "en_US",
+      title: heading,
+      description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: heading,
+      description,
+    },
   };
 }
 
@@ -147,11 +164,7 @@ export default async function ChapterPage({
         </section>
       </main>
 
-      <footer className="border-t border-rule">
-        <p className="mx-auto max-w-6xl px-6 py-8 text-center text-xs text-muted">
-          {dict.siteNameDevanagari}
-        </p>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

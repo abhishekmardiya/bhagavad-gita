@@ -15,6 +15,7 @@ export interface Dictionary {
   english: string;
   hindi: string;
   themeLabel: string;
+  scrollToTopLabel: string;
   errorTitle: string;
   errorBody: string;
   retry: string;
@@ -25,6 +26,7 @@ export interface Dictionary {
   translationBy: string;
   notFoundTitle: string;
   notFoundBody: string;
+  sourceOnGitHub: string;
 }
 
 const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
@@ -46,5 +48,22 @@ export async function getLocale(): Promise<Locale> {
 
 export async function getDictionary(): Promise<Dictionary> {
   const locale = await getLocale();
+  return dictionaries[locale]();
+}
+
+/**
+ * The `params`-based counterpart to `getLocale()`.
+ *
+ * Metadata image routes (`opengraph-image.tsx`) are Route Handlers rather than
+ * Server Components: reading the locale through `next/root-params` there marks
+ * them request-time and opts them out of prerendering, so they take `lang` from
+ * their own `params` prop and narrow it here instead.
+ */
+export function toLocale(value: string): Locale {
+  if (!isLocale(value)) notFound();
+  return value;
+}
+
+export function getDictionaryFor(locale: Locale): Promise<Dictionary> {
   return dictionaries[locale]();
 }
