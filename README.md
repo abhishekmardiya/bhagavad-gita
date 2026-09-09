@@ -79,18 +79,26 @@ The key is read only in [`src/lib/gita/api.ts`](src/lib/gita/api.ts), which is g
 
 To confirm after a build: `grep -r "<your key>" .next/static` should return nothing, and DevTools should show zero requests to `bhagavad-gita3.p.rapidapi.com`.
 
-### Caching
+### Rendering and data freshness
 
-There is none. Every page view fetches fresh from the API.
+Both locales are **statically prerendered at build time**. `next build` reports:
 
-This falls out of Next 16 defaults rather than explicit configuration: with Cache Components off, `fetch` is uncached, which makes the route render dynamically. `next build` confirms it — the route reports as `ƒ /[lang]` (Dynamic, server-rendered on demand) rather than prerendered static HTML.
+```
+└   /[lang]
+  ├ ● /en
+  └ ● /hi        ● (SSG) prerendered as static HTML
+```
 
-Two things to know:
+Two pieces are required, and both matter:
 
-- **In dev only**, `serverComponentsHmrCache` defaults to `true`, so fetch responses are reused across HMR refreshes and you may not see fresh data until a full reload. Set `experimental.serverComponentsHmrCache: false` in `next.config.ts` if that gets in the way.
-- **In production**, the API round-trip (~0.4s) sits on the critical path for every request, and each view costs quota.
+1. [`generateStaticParams`](src/app/[lang]/page.tsx) declares `en` and `hi` as the paths to prerender.
+2. The chapter fetch sets `cache: "force-cache"`. This is not optional — Next 16 leaves `fetch` **uncached by default**, and a single uncached read forces the whole route to render dynamically no matter what `generateStaticParams` returns.
 
-Chapter summaries are fixed text, so if quota or latency becomes a problem, the change to make is enabling `cacheComponents: true` and wrapping the fetch in `use cache` + `cacheLife("days")`. That prerenders both locales as static HTML with one API call per build.
+The result is one API call per locale per build and **zero at runtime**. Locally that takes serving `/en` from ~400 ms (live API round-trip on every request) to ~2 ms.
+
+Data is frozen until the next build. That is deliberate: chapter summaries are fixed scripture text, so there is nothing to refresh, and the site keeps serving if the upstream API goes down. To pick up an upstream edit, redeploy.
+
+If you ever do want background refresh without a redeploy, add `export const revalidate = 86400` to [`src/app/[lang]/page.tsx`](src/app/[lang]/page.tsx) for daily ISR.
 
 ### Theming
 
