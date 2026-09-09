@@ -12,5 +12,12 @@
   "themeLabel": "Toggle theme",
   "errorTitle": "The chapters could not be loaded",
   "errorBody": "Something went wrong reaching the Bhagavad Gita API. Please try again.",
-  "retry": "Try again"
+  "retry": "Try again",
+  "backToChapters": "All chapters",
+  "summaryHeading": "Chapter summary",
+  "versesHeading": "Verses",
+  "verseLabel": "Verse",
+  "translationBy": "Translated by",
+  "notFoundTitle": "This page could not be found",
+  "notFoundBody": "The chapter you are looking for does not exist or may have moved."
 }

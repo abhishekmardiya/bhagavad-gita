@@ -1,7 +1,7 @@
+import Link from "next/link";
 import type { Chapter } from "@/lib/gita/types";
 import type { Locale } from "@/lib/i18n/config";
-
-const devanagariNumber = new Intl.NumberFormat("hi-IN-u-nu-deva");
+import { formatNumber } from "@/lib/i18n/numerals";
 
 export function ChapterCard({
   chapter,
@@ -22,16 +22,12 @@ export function ChapterCard({
   const summary = (
     hi ? chapter.chapter_summary_hindi : chapter.chapter_summary
   ).trim();
-  const number = hi
-    ? devanagariNumber.format(chapter.chapter_number)
-    : String(chapter.chapter_number).padStart(2, "0");
-  const verses = hi
-    ? devanagariNumber.format(chapter.verses_count)
-    : String(chapter.verses_count);
+  const number = formatNumber(chapter.chapter_number, locale, 2);
+  const verses = formatNumber(chapter.verses_count, locale);
 
   return (
     <article
-      className="animate-rise group relative isolate flex w-full flex-col overflow-hidden rounded-xl border border-rule bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-rule-strong hover:bg-surface-raised hover:shadow-[0_12px_32px_-12px_rgb(var(--shadow)/var(--shadow-strength))]"
+      className="animate-rise group relative isolate flex w-full flex-col overflow-hidden rounded-xl border border-rule bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-rule-strong hover:bg-surface-raised hover:shadow-[0_12px_32px_-12px_rgb(var(--shadow)/var(--shadow-strength))] has-[a:focus-visible]:border-rule-strong has-[a:focus-visible]:bg-surface-raised"
       style={{ animationDelay: `${Math.min(index, 11) * 45}ms` }}
     >
       <span
@@ -55,7 +51,12 @@ export function ChapterCard({
         className={`mt-3 text-2xl text-ink ${hi ? "deva" : "font-display"}`}
         lang={hi ? "sa" : undefined}
       >
-        {title}
+        <Link
+          href={`/${locale}/chapter/${chapter.slug}`}
+          className="after:absolute after:inset-0 after:content-['']"
+        >
+          {title}
+        </Link>
       </h3>
 
       <p className="mt-1 text-sm italic text-indigo" lang="sa">

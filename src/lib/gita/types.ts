@@ -15,3 +15,27 @@ export interface Chapter {
   chapter_summary: string;
   chapter_summary_hindi: string;
 }
+
+/** One of the several translations attached to every verse. */
+export interface Translation {
+  id: number;
+  description: string;
+  author_name: string;
+  /** "english" or "hindi" in practice, but the API does not constrain it. */
+  language: string;
+}
+
+/** A verse as returned by `GET /v2/chapters/{n}/verses/`. */
+export interface Verse {
+  id: number;
+  verse_number: number;
+  chapter_number: number;
+  slug: string;
+  /** Devanagari, with "\n\n" between lines. */
+  text: string;
+  /** Romanised Sanskrit. */
+  transliteration: string;
+  /** Dense semicolon-separated glossary. Fetched but not rendered. */
+  word_meanings: string;
+  translations: Translation[];
+}

@@ -18,6 +18,13 @@ export interface Dictionary {
   errorTitle: string;
   errorBody: string;
   retry: string;
+  backToChapters: string;
+  summaryHeading: string;
+  versesHeading: string;
+  verseLabel: string;
+  translationBy: string;
+  notFoundTitle: string;
+  notFoundBody: string;
 }
 
 const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
