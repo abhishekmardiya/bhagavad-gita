@@ -1,26 +1,120 @@
 @import "tailwindcss";
 
+/* next-themes toggles a `dark` class on <html> and injects its own pre-paint
+   script. `:root` carries the complete light palette; the dark block only
+   redefines tokens, so no color is defined solely inside a conditional. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --parchment: #f7f2e7;
+  --surface: #fffdf8;
+  --surface-raised: #fffefb;
+  --ink: #211a13;
+  --ink-soft: #4a3c2e;
+  --muted: #7b6a56;
+  --saffron: #c2601b;
+  --saffron-soft: #e8a05a;
+  --indigo: #2f2d63;
+  --rule: #e4d9c3;
+  --rule-strong: #d3c3a4;
+  --numeral: #efe6d2;
+  --shadow: 30 20 10;
+  --shadow-strength: 0.07;
+}
+
+.dark {
+  --parchment: #14110d;
+  --surface: #1c1813;
+  --surface-raised: #221d17;
+  --ink: #f3ece0;
+  --ink-soft: #d7cbb8;
+  --muted: #9c8b76;
+  --saffron: #e5a25c;
+  --saffron-soft: #b3711f;
+  --indigo: #a8a5e6;
+  --rule: #322a21;
+  --rule-strong: #453a2d;
+  --numeral: #241f18;
+  --shadow: 0 0 0;
+  --shadow-strength: 0.4;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-parchment: var(--parchment);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-saffron: var(--saffron);
+  --color-saffron-soft: var(--saffron-soft);
+  --color-indigo: var(--indigo);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-numeral: var(--numeral);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-display: var(--font-marcellus), ui-serif, Georgia, serif;
+  --font-deva:
+    var(--font-noto-serif-deva), "Noto Serif Devanagari", ui-serif, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--parchment);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Browsers default <button> to cursor: default, and Preflight keeps that.
+   Restore the pointer for anything actually clickable. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* Devanagari needs more line height than Latin to clear its matras. */
+.deva {
+  font-family: var(--font-deva);
+  line-height: 1.75;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-rise {
+  animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: must beat Tailwind's transition utilities */
+    transition-duration: 0.01ms !important;
+  }
+}
+
+::selection {
+  background-color: var(--saffron-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--saffron);
+  outline-offset: 3px;
+  border-radius: 2px;
 }

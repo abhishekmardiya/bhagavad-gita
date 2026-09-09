@@ -1,0 +1,16 @@
+{
+  "siteName": "Bhagavad Gita",
+  "siteNameDevanagari": "श्रीमद्भगवद्गीता",
+  "tagline": "The Song of the Divine — eighteen chapters of dialogue between Arjuna and Krishna on the field of Kurukshetra.",
+  "chaptersHeading": "The Eighteen Chapters",
+  "chaptersSubheading": "Each chapter is a yoga — a path. Summaries as given in the Bhagavad Gita.",
+  "chapterLabel": "Chapter",
+  "verses": "verses",
+  "languageLabel": "Language",
+  "english": "English",
+  "hindi": "हिन्दी",
+  "themeLabel": "Toggle theme",
+  "errorTitle": "The chapters could not be loaded",
+  "errorBody": "Something went wrong reaching the Bhagavad Gita API. Please try again.",
+  "retry": "Try again"
+}

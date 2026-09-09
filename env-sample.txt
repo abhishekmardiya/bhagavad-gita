@@ -1,0 +1,4 @@
+# Copy to .env and fill in your RapidAPI key.
+# Get one at https://rapidapi.com/bhagavad-gita-bhagavad-gita-default/api/bhagavad-gita3
+# Server-only. Never prefix with NEXT_PUBLIC_ — that would inline it into the browser bundle.
+RAPIDAPI_KEY=""
