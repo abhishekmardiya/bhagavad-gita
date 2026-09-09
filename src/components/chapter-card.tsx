@@ -47,8 +47,14 @@ export function ChapterCard({
         {dict.chapterLabel} {number}
       </p>
 
+      {/* `2lh` reserves two lines for the title (and below, for the meaning)
+          so that a wrapped title in one card does not push the rest of its
+          text out of step with its neighbours. Only from `sm:` up, where the
+          grid actually has neighbouring columns. */}
       <h3
-        className={`mt-3 text-2xl text-ink ${hi ? "deva" : "font-display"}`}
+        className={`mt-3 text-2xl text-ink sm:min-h-[2lh] ${
+          hi ? "deva" : "font-display"
+        }`}
         lang={hi ? "sa" : undefined}
       >
         <Link
@@ -65,14 +71,14 @@ export function ChapterCard({
 
       {/* name_meaning has no Hindi counterpart in the API, so it is English-only. */}
       {!hi && (
-        <p className="mt-3 text-sm font-medium text-ink-soft">
+        <p className="mt-3 text-sm font-medium text-ink-soft sm:min-h-[2lh]">
           {chapter.name_meaning}
         </p>
       )}
 
       <p
         title={summary}
-        className={`mt-4 line-clamp-5 text-sm leading-relaxed text-muted ${
+        className={`mb-5 mt-4 line-clamp-5 text-sm leading-relaxed text-muted ${
           hi ? "deva" : ""
         }`}
       >
@@ -81,7 +87,7 @@ export function ChapterCard({
 
       {/* Same tinted pill as the verse reference on the chapter page, so the
           count reads as a stat rather than as a caption. */}
-      <p className="mt-5 border-t border-rule pt-4">
+      <p className="mt-auto border-t border-rule pt-5">
         <span
           className={`inline-flex items-center gap-1.5 rounded-full bg-saffron/12 px-3 py-1 text-sm font-semibold text-saffron ${
             hi ? "deva" : ""

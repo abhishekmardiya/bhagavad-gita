@@ -16,18 +16,23 @@ export async function SiteHeader() {
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-6">
         <Link
           href={`/${locale}`}
-          className="flex items-baseline gap-2.5 transition-colors hover:text-saffron"
+          className="inline-flex items-center text-saffron transition-colors hover:text-saffron-soft"
         >
-          {/* Dropped on narrow screens so the wordmark and the controls fit. */}
-          <span className="deva hidden text-xs text-saffron sm:inline">
-            {dict.siteNameDevanagari}
-          </span>
+          {/* The wordmark is the whole logo, so it carries the weight and size
+              a mark needs — and no letter-spacing, which would break the
+              conjuncts and matras of the Devanagari.
+
+              The nudge optically centres it. Noto Serif Devanagari reserves
+              0.625em of descent for below-base conjuncts, but this string
+              drops only ~0.11em below the baseline, so `items-center` centres
+              a box whose ink rides ~0.24em high. Line-height cannot fix this
+              — half-leading is symmetric, so it moves the box and the ink
+              together. Measured against the header centre, not guessed. */}
           <span
-            className={`text-base text-ink transition-colors hover:text-saffron ${
-              locale === "hi" ? "deva" : "font-display"
-            }`}
+            className="deva translate-y-[0.24em] text-xl font-semibold"
+            lang="sa"
           >
-            {dict.siteName}
+            {dict.siteNameDevanagari}
           </span>
         </Link>
 
