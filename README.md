@@ -26,7 +26,7 @@ Open http://localhost:3000 — it redirects to `/en` or `/hi` based on your brow
 | Variable | Required | What it does |
 | --- | --- | --- |
 | `RAPIDAPI_KEY` | yes | bhagavad-gita3 API key. Server-only — never prefix it with `NEXT_PUBLIC_`. |
-| `SITE_URL` | for deploys | Canonical origin, used as `metadataBase` so `og:image` URLs are absolute. Falls back to `http://localhost:3000`, which would ship unreachable preview URLs in production. |
+| `SITE_URL` | for deploys off Vercel | Canonical origin, used as `metadataBase` so `og:image` URLs are absolute. Unset, it falls back to `https://$VERCEL_PROJECT_PRODUCTION_URL` (set automatically on Vercel) and then to `http://localhost:3000`. |
 
 `.env` is gitignored (`.gitignore` ignores `.env*`); `env-sample.txt` is the committed template.
 
@@ -164,7 +164,7 @@ Both routes render through `renderOgCard()` in [`src/lib/og.tsx`](src/lib/og.tsx
 
 The backdrop is `public/og-plate.jpg`: a parchment field on the left for the type, with the Kurukshetra photograph feathered into the right side. It is a build artifact of `public/pexels-dhruv-jangid-2945224-39362306.jpg` — the `ffmpeg` command that regenerates it is in the doc comment above `PLATE` in [`og.tsx`](src/lib/og.tsx). The alpha ramp in that command is what hides the seam; a hard crop butts the photo against the parchment with a visible edge.
 
-Set `SITE_URL` before deploying, or the cards will be advertised at `localhost:3000`.
+`metadataBase` is resolved at build time, not per request — every page here is prerendered, so a runtime-only origin comes too late. On Vercel it falls back to `VERCEL_PROJECT_PRODUCTION_URL`, so cards work with no configuration; preview deploys advertise the production origin, which is what a canonical URL should say. Anywhere else, set `SITE_URL` before building or the cards will be advertised at `localhost:3000` and every scraper will show a broken image.
 
 ### Theming
 

@@ -33,11 +33,22 @@ export function generateStaticParams() {
 }
 
 /**
- * `og:image` and friends must be absolute. Left unset, Next falls back to
- * localhost with a build warning, which would ship unreachable preview URLs.
- * Server-only, so it is deliberately not `NEXT_PUBLIC_`.
+ * `og:image` and friends must be absolute, and the value is baked in at build
+ * time because every page here is prerendered — so an origin that is only
+ * correct at runtime is too late.
+ *
+ * `VERCEL_PROJECT_PRODUCTION_URL` is the fallback rather than `VERCEL_URL`: it
+ * is the stable production domain, whereas `VERCEL_URL` changes with every
+ * deployment. Preview deploys therefore advertise the production cards, which
+ * is what canonical URLs should say anyway. It arrives without a scheme.
+ *
+ * Server-only, so `SITE_URL` is deliberately not `NEXT_PUBLIC_`.
  */
-const metadataBase = new URL(process.env.SITE_URL ?? "http://localhost:3000");
+const vercelOrigin = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+const metadataBase = new URL(
+  process.env.SITE_URL ??
+    (vercelOrigin ? `https://${vercelOrigin}` : "http://localhost:3000"),
+);
 
 export async function generateMetadata(): Promise<Metadata> {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);

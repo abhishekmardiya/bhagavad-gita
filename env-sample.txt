@@ -4,5 +4,7 @@
 RAPIDAPI_KEY=""
 
 # Canonical origin, used as `metadataBase` so og:image URLs are absolute.
-# Defaults to http://localhost:3000 when unset.
+# Optional on Vercel, which supplies VERCEL_PROJECT_PRODUCTION_URL as the
+# fallback. Anywhere else, set it before building: unset, it defaults to
+# http://localhost:3000 and every share card ships a broken image.
 SITE_URL="https://example.com"
